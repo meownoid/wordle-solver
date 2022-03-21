@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 from solver.types import Feedback, WordGuess
 
 

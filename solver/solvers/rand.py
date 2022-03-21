@@ -1,5 +1,4 @@
 import random
-from typing import Optional
 
 from solver.space import Space
 from solver.types import Solver, WordGuess, WordSuggestion
