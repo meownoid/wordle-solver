@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from enum import Enum, auto
+from enum import IntEnum
 
 
-class Feedback(Enum):
-    CORRECT = auto()
-    WRONG_PLACE = auto()
-    MISSING = auto()
+class Feedback(IntEnum):
+    CORRECT = 2
+    WRONG_PLACE = 1
+    MISSING = 0
 
 
 @dataclass

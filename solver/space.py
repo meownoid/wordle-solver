@@ -3,15 +3,14 @@ from solver.types import Feedback, WordGuess
 
 class Space:
     def __init__(self, words: list[str]):
-        self._words = sorted(set(map(lambda x: x.lower(), words)))
-        self._space = self._words
+        self._words = words
 
     @property
     def words(self) -> list[str]:
-        return self._space
+        return self._words
 
-    def filter(self, guess: WordGuess) -> None:
-        new_space = []
+    def filter(self, guess: WordGuess) -> "Space":
+        new_words = []
 
         letters_missing = set()
         letters_present = set()
@@ -25,7 +24,7 @@ class Space:
 
         letters_excluded = letters_missing - letters_present
 
-        for word in self._space:
+        for word in self._words:
             word_set = set(word)
 
             if len(letters_excluded & word_set) > 0:
@@ -51,6 +50,6 @@ class Space:
             if not ok:
                 continue
 
-            new_space.append(word)
+            new_words.append(word)
 
-        self._space = new_space
+        return Space(new_words)

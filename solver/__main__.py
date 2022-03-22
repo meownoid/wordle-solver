@@ -67,7 +67,12 @@ def main() -> None:
     with open("words.txt", "r") as f:
         words = f.read().split()
 
-    solver = solvers["random"](words)
+    words = sorted(filter(lambda x: len(x) == 5, map(lambda x: x.lower(), words)))
+
+    if not words:
+        raise ValueError("Words list is empty")
+
+    solver = solvers["max-diff"](words)
     run_interactive(solver)
 
 
