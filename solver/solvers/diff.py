@@ -33,11 +33,16 @@ class MaxDiffSolver(Solver):
         random.shuffle(words)
         words_subset = words[:5000]
 
-        with multiprocessing.Pool(cpus) as pool:
-            for word, score in zip(
-                words,
-                pool.starmap(_score, zip(words, repeat(words_subset)), chunksize=500),
-            ):
+        if len(words) > 1000:
+            with multiprocessing.Pool(cpus) as pool:
+                for word, score in zip(
+                    words,
+                    pool.starmap(_score, zip(words, repeat(words_subset))),
+                ):
+                    result.append(WordSuggestion(word=word, score=score))
+        else:
+            for word in words:
+                score = _score(word, words)
                 result.append(WordSuggestion(word=word, score=score))
 
         return sorted(result, key=lambda x: -x.score)
