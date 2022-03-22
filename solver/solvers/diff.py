@@ -31,13 +31,12 @@ class MaxDiffSolver(Solver):
 
         words = self.space.words.copy()
         random.shuffle(words)
-        words_subset = words[:5000]
 
         if len(words) > 1000:
             with multiprocessing.Pool(cpus) as pool:
                 for word, score in zip(
                     words,
-                    pool.starmap(_score, zip(words, repeat(words_subset))),
+                    pool.starmap(_score, zip(words, repeat(words))),
                 ):
                     result.append(WordSuggestion(word=word, score=score))
         else:
