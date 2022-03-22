@@ -26,11 +26,8 @@ class MaxDiffSolver(Solver):
 
     def _solve(self) -> list[WordSuggestion]:
         cpus = multiprocessing.cpu_count()
-
+        words = self.space.words
         result = []
-
-        words = self.space.words.copy()
-        random.shuffle(words)
 
         if len(words) > 1000:
             with multiprocessing.Pool(cpus) as pool:
