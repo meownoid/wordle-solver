@@ -1,2 +1,21 @@
-# wordle-solver
-Solver for the Wordle game
+# Wordle Solver
+
+Simple program for solving the [Wordle](https://www.nytimes.com/games/wordle/index.html) game.
+
+## Installation
+
+```shell
+git clone https://github.com/meownoid/wordle-solver
+```
+
+## Usage
+
+```shell
+cd wordle-solver
+python -m solver
+```
+
+## Solvers
+
+1. `random` – randomly suggests words that satisfy all constrains
+2. `max-diff` – ranks words based on their difference with all other words that satisfy all constrains
