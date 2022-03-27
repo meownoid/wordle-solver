@@ -1,3 +1,7 @@
+import argparse
+import os
+import sys
+
 from solver.solvers import solvers
 from solver.types import Feedback, Solver, WordGuess
 
@@ -36,7 +40,7 @@ def parse_user_input(word: str) -> WordGuess:
     return WordGuess(word="".join(letters), feedback=feedback)
 
 
-def run_interactive(solver: Solver) -> None:
+def run_interactive(solver: Solver, n_suggestions: int) -> None:
     print(WELCOME_MESSAGE.strip() + "\n")
     print(f"Using the {solver.__class__.__name__}\n")
 
@@ -48,7 +52,7 @@ def run_interactive(solver: Solver) -> None:
             break
 
         print("Suggestions:\n")
-        for sgs in suggestions[:15]:
+        for sgs in suggestions[:n_suggestions]:
             print(f"- {sgs.word} ({sgs.score:.2f})")
 
         print("")
@@ -64,16 +68,46 @@ def run_interactive(solver: Solver) -> None:
 
 
 def main() -> None:
-    with open("words.txt", "r") as f:
+    parser = argparse.ArgumentParser(description="Wordle solver")
+    parser.add_argument(
+        "--words-file",
+        dest="words_file",
+        help="File with list of words (newline separated)",
+        default="words.txt",
+    )
+    parser.add_argument(
+        "--solver", dest="solver", help="Solver name", default="max-diff"
+    )
+    parser.add_argument(
+        "--suggestions",
+        dest="suggestions",
+        help="Number of suggestions to show",
+        type=int,
+        default=10,
+    )
+
+    args = parser.parse_args()
+
+    if not os.path.exists(args.words_file):
+        print(f"{args.words_file} does not exist")
+        sys.exit(1)
+
+    with open(args.words_file, "r") as f:
         words = f.read().split()
 
     words = sorted(filter(lambda x: len(x) == 5, map(lambda x: x.lower(), words)))
 
     if not words:
-        raise ValueError("Words list is empty")
+        print("Word list is empty")
+        sys.exit(1)
 
-    solver = solvers["max-diff"](words)
-    run_interactive(solver)
+    if args.solver not in solvers:
+        print(f"There is no solver named {args.solver}")
+        print(f"Available solvers: {list(solvers.keys())}")
+        sys.exit(1)
+
+    solver = solvers[args.solver](words)
+    run_interactive(solver, n_suggestions=args.suggestions)
 
 
 if __name__ == "__main__":
