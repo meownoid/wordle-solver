@@ -2,6 +2,8 @@
 
 Simple program for solving the [Wordle](https://www.nytimes.com/games/wordle/index.html) game.
 
+[![asciicast](https://asciinema.org/a/480887.svg)](https://asciinema.org/a/480887)
+
 ## Installation
 
 ```shell
