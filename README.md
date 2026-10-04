@@ -1,8 +1,8 @@
-# Wordle Solver
+# Wordle solver
 
 Simple program for solving the [Wordle](https://www.nytimes.com/games/wordle/index.html) game.
 
-[![asciicast](https://asciinema.org/a/480887.svg)](https://asciinema.org/a/480887)
+[![asciicast](https://github.com/user-attachments/assets/64bc7918-b3b2-4c6f-b0a3-971f211dd677)](https://asciinema.org/a/480887)
 
 ## Installation
 
